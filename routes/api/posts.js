@@ -12,7 +12,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 router.get('/',(req,res, next)=>{      
-   
+   Post.find()
+   .then(async(results)=>{
+    results = await User.populate(results, { path: "postedBy" })
+       res.status(200).send(results)
+   })
+   .catch((error) => {
+       console.log(error)
+       res.sendStatus(400);
+   })
 });
 
 router.post('/', async(req,res, next)=>{  
