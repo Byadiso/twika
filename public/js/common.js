@@ -17,5 +17,14 @@ $("#postTextarea").keyup((event)=>{
 
 $("#submitPostButton").click((event)=>{
     var button = $(event.target);
-    var textbox = $("#postTextarea")
+    var textbox = $("#postTextarea");
+
+    var data = {
+        content: textbox.val()
+    }
+
+    $.post("/api/posts", data, (postData, status, xhr)=>{
+
+    })
+
 })

@@ -14,7 +14,12 @@ router.get('/',(req,res, next)=>{
    
 });
 
-router.post('/', async(req,res, next)=>{        
+router.post('/', async(req,res, next)=>{  
+    if(!req.body.content){
+        console.log("content param not sent with request ")
+        return res.sendStatus(400);
+    }      
+    res.status(200).send("it worked");
   
 });
 
