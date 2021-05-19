@@ -45,7 +45,7 @@ function createPostHtml(postData){
     return `<div class="post">
                 <div class="mainContentContainer">
                     <div class="userImageContainer">
-                         <img scr="${postedBy.profilePic}">
+                         <img src="${postedBy.profilePic}">
                     </div>
                     <div class="postContentContainer">
                         <div class="header">
@@ -58,6 +58,17 @@ function createPostHtml(postData){
                         </div>
                         
                         <div class="postFooter">
+                            <div class="postButtonContainer">
+                                <button>
+                                    <i class="fas fa-comment"></i>
+                                </button>
+                                <button>
+                                     <i class="fas fa-retweet"></i>
+                                 </button>
+                                 <button>
+                                     <i class="fas fa-heart"></i>
+                                 </button>
+                            </div>
                         </div>
                     
                     </div>
