@@ -166,6 +166,20 @@ button{
     flex: 1;
     display: flex;
 }
-.postFooter .postButtonContainer  button {
+.postFooter .postButtonContainer button {
     padding: 0 100px;
+}
+
+.header a:hover{
+    text-decoration: underline;
+}
+
+.header a, header span {
+    padding-right: 5px;
+}
+
+.postButtonContainer button:hover{
+    background-color: #d4edff;
+    color: var(--blue);
+    border-radius: 50%;
 }
