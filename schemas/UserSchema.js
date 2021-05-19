@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
     email:{type:String,trim:true,required:true, unique: true },
     password:{type:String,trim:true,required:true, unique: true },
     profilePic:{type:String, default: "/images/profilePic.png" },
+    likes: [{ type: ObjectId, ref: "Post" }],
 
     // hashed_password:{
     //     type:String,

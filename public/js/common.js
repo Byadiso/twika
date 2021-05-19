@@ -33,7 +33,13 @@ $("#submitPostButton").click((event)=>{
         
     })
 
-})
+});
+
+
+$(document).on("click",".likeButton", (event)=>{
+    
+console.log("yes you clicked me ")
+});
 
 
 function createPostHtml(postData){
@@ -68,7 +74,7 @@ function createPostHtml(postData){
                                 <button>
                                      <i class="fas fa-retweet"></i>
                                  </button>
-                                 <button>
+                                 <button class="likeButton">
                                      <i class="fas fa-heart"></i>
                                  </button>
                             </div>

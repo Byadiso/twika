@@ -10,6 +10,7 @@ const {ObjectId } = mongoose.Schema;
 const postSchema = new mongoose.Schema({
     content:{ type:String, trim:true},
     postedBy:{ type: ObjectId,  ref: "User" },
+    likes: [{ type: ObjectId, ref: "User" }],
     pinned: Boolean
     
 
@@ -26,7 +27,8 @@ const postSchema = new mongoose.Schema({
     //     type:String,
     //     trim:true
     //    },
-    // following: [{ type: ObjectId, ref: "USer" }],
+    
+    // following: [{ type: ObjectId, ref: "user" }],
     // followers: [{ type: ObjectId, ref: "USer" }],
     // salt: String,
     // role:{
