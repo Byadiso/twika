@@ -1,3 +1,4 @@
+
 $("#postTextarea").keyup((event)=>{
     var textbox =$(event.target);
     var value = textbox.val().trim();
@@ -24,7 +25,17 @@ $("#submitPostButton").click((event)=>{
     }
 
     $.post("/api/posts", data, (postData, status, xhr)=>{
-
+        console.log(postData)
+        var html = createPostHtml(postData);
+        $(".postsContainer").prepend(html);
+        textbox.val("");
+        button.prop("disabled", true)
+        
     })
 
 })
+
+
+function createPostHtml(postData){
+    return postData.content
+}
