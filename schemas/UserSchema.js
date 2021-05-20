@@ -15,6 +15,8 @@ const userSchema = new mongoose.Schema({
     password:{type:String,trim:true,required:true, unique: true },
     profilePic:{type:String, default: "/images/profilePic.png" },
     likes: [{ type: ObjectId, ref: "Post" }],
+    retweets: [{ type: ObjectId, ref: "User" }],
+    
 
     // hashed_password:{
     //     type:String,
