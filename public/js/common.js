@@ -45,7 +45,13 @@ $(document).on("click",".likeButton", (event)=>{
         url:`api/posts/${postId}/like`,
         type: "PUT",
         success: (postData)=>{
-            console.log(postData.likes.length);
+            button.find("span").text(postData.likes.length || "" );
+            
+            if(postData.likes.includes(userLoggedIn._id)){
+                button.addClass("active");
+            } else {
+                button.removeClass("active");
+            }
         }
     })
 
@@ -57,8 +63,7 @@ function getPostIdFromElement(element){
     var postId = rootElement.data().id;
 
     if(postId === undefined) return alert("post id undefined");
-
-    return postId
+          return postId
 }
 
 
@@ -70,6 +75,8 @@ function createPostHtml(postData){
     }
     var displayName = postedBy.firstName + " " + postedBy.lastName;
     var timestamp= timeDifference(new Date(), new Date(postData.createdAt));
+
+    var likeButtonActiveClass = postData.likes.includes(userLoggedIn._id) ? "active" : ""
 
     return `<div class="post" data-id='${postData._id}'>
                 <div class="mainContentContainer">
@@ -91,13 +98,19 @@ function createPostHtml(postData){
                                 <button>
                                     <i class="fas fa-comment"></i>
                                 </button>
-                                <button>
+                            </div>
+                            <div class="postButtonContainer green">
+                                <button class="retweet">
                                      <i class="fas fa-retweet"></i>
                                  </button>
-                                 <button class="likeButton">
+                            </div>
+                            <div class="postButtonContainer red">
+                                 <button class="likeButton ${likeButtonActiveClass}">
                                      <i class="fas fa-heart"></i>
+                                     <span>${postData.likes.length || ""}</span>
                                  </button>
                             </div>
+                            
                         </div>
                     
                     </div>
