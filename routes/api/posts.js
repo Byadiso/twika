@@ -93,7 +93,7 @@ router.post('/:id/retweet', async(req,res, next)=>{
 
     // var isLiked = req.session.user.likes && req.session.user.likes.includes(postId);
 
-    var option = deletedPost != nul ?  "$pull" : "$addToSet";
+    var option = deletedPost != null ?  "$pull" : "$addToSet";
 
     var repost = deletedPost;
 
