@@ -1,3 +1,4 @@
+const { post } = require("../../routes/loginRoutes");
 
 $("#postTextarea").keyup((event)=>{
     var textbox =$(event.target);
@@ -93,6 +94,13 @@ function getPostIdFromElement(element){
 
 function createPostHtml(postData){
 
+    if(postData == null ) return alert('post object is null');
+
+    var isRetweet = postData.retweetData !== null ;
+    var retweetedBy = isRetweet ? postData.postedBy.username : null;
+    
+    postData = isRetweet ? postData.retweetData : postData ; 
+
     var postedBy = postData.postedBy;
     if(postedBy._id === undefined){
         return console.log("User Object not populated")
@@ -100,9 +108,21 @@ function createPostHtml(postData){
     var displayName = postedBy.firstName + " " + postedBy.lastName;
     var timestamp= timeDifference(new Date(), new Date(postData.createdAt));
 
-    var likeButtonActiveClass = postData.likes.includes(userLoggedIn._id) ? "active" : ""
+    var likeButtonActiveClass = postData.likes.includes(userLoggedIn._id) ? "active" : "";
+    var retweeetButtonActiveClass = postData.retweetUsers.includes(userLoggedIn._id) ? "active" : ""
+
+    var retweetText = "";
+    if(isRetweet){
+        retweetText = `<span>
+                              <i class="fas fa-retweet"></i>
+                              Retweeted by <a href="/profile/${retweetedBy}">@${retweetedBy}</a>
+                      </span>`
+    }
 
     return `<div class="post" data-id='${postData._id}'>
+              <div class="postActionContainer">
+                ${retweetedBy}
+              </div>
                 <div class="mainContentContainer">
                     <div class="userImageContainer">
                          <img src="${postedBy.profilePic}">
@@ -124,7 +144,7 @@ function createPostHtml(postData){
                                 </button>
                             </div>
                             <div class="postButtonContainer green">
-                                <button class="retweetButton">
+                                <button class="retweetButton ${retweeetButtonActiveClass}">
                                      <i class="fas fa-retweet"></i>
                                      <span>${postData.retweetUsers.length || ""}</span>
                                  </button>
