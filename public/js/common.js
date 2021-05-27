@@ -112,6 +112,35 @@ $(document).on("click",".retweetButton", (event)=>{
 
 });
 
+
+
+
+$(document).on("click",".post", (event)=>{    
+    var element = $(event.target)
+    var postId = getPostIdFromElement(element);
+  
+    if(postId !== undefined && !element.is("button")){
+        window.location.href='/post/' + postId
+    }
+    // if(postId === undefined )return ;
+    // $.ajax({
+    //     url:`api/posts/${postId}/retweet`,
+    //     type: "POST",
+    //     success: (postData)=>{
+          
+    //         button.find("span").text(postData.retweetUsers.length || "" );
+            
+    //         if(postData.retweetUsers.includes(userLoggedIn._id)){
+    //             button.addClass("active");
+    //         } else {
+    //             button.removeClass("active");
+    //         }
+    //     }
+    // })
+
+});
+
+
 function getPostIdFromElement(element){
     var isRoot = element.hasClass("post");
     var rootElement = isRoot ? element: element.closest(".post");
@@ -158,7 +187,15 @@ function createPostHtml(postData) {
     if(postData.replyTo){
         if(!postData.replyTo._id){
             return alert("reply  to is not populated")
-        }
+        } else  if(!postData.replyTo.postedBy._id){
+            return alert("postedBy is not populated")
+        } 
+
+        var replyToUsername = postData.replyTo.postedBy.username
+
+        replyFlag =` <div class="replyFlag">
+                        Replying to <a href="profile/${replyToUsername}">@${replyToUsername}</a>
+                    </div>`
     }
 
 
@@ -167,6 +204,7 @@ function createPostHtml(postData) {
     return `<div class="post" data-id='${postData._id}'>
               <div class="postActionContainer">
                 ${retweetText}
+                
               </div>
                 <div class="mainContentContainer">
                     <div class="userImageContainer">
@@ -178,6 +216,7 @@ function createPostHtml(postData) {
                             <span class="username">@${postedBy.username}</span>
                             <span class="username">${timestamp}</span>
                         </div>
+                        ${replyFlag}
                         <div class="postBody">
                             <span>${postData.content}</span>
                         </div>
