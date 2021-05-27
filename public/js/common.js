@@ -1,9 +1,9 @@
-const { post } = require("../../routes/loginRoutes");
+
 
 $("#postTextarea").keyup((event)=>{
     var textbox =$(event.target);
     var value = textbox.val().trim();
-    console.log(value);
+    // console.log(value);
     var submitButton = $("#submitPostButton");
 
     if(submitButton.lenght == 0) return alert("No submmit button found");
@@ -91,17 +91,20 @@ function getPostIdFromElement(element){
           return postId
 }
 
+function createPostHtml(postData) {  
+     
+    if(postData == null ) return alert('post object is null');   
+   
+    // check if this is a retweet
+    var isRetweet = postData.retweetData !== undefined ;
+     // get the user who retweeted
+    var retweetedBy = isRetweet ? postData.postedBy.username : null;  
 
-function createPostHtml(postData){
-
-    if(postData == null ) return alert('post object is null');
-
-    var isRetweet = postData.retweetData !== null ;
-    var retweetedBy = isRetweet ? postData.postedBy.username : null;
-    
     postData = isRetweet ? postData.retweetData : postData ; 
+ 
 
     var postedBy = postData.postedBy;
+   
     if(postedBy._id === undefined){
         return console.log("User Object not populated")
     }
@@ -121,7 +124,7 @@ function createPostHtml(postData){
 
     return `<div class="post" data-id='${postData._id}'>
               <div class="postActionContainer">
-                ${retweetedBy}
+                ${retweetText}
               </div>
                 <div class="mainContentContainer">
                     <div class="userImageContainer">
