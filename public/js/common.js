@@ -19,12 +19,20 @@ $("#postTextarea, #replyTextarea").keyup((event)=>{
 })
 
 
-$("#submitPostButton").click((event)=>{
+$("#submitPostButton , #submitReplyButton").click((event)=>{
     var button = $(event.target);
-    var textbox = $("#postTextarea");
+
+    var isModal = button.parents(".modal").length == 1;
+    var textbox = isModal ? $("#replyTextarea"):  $("#postTextarea");
 
     var data = {
         content: textbox.val()
+    }
+
+    if(isModal){
+        var id = button.data().id;
+        if(id == null) return alert("Butoon id is null")
+        data.replyTo = id ;
     }
 
     $.post("/api/posts", data, (postData, status, xhr)=>{
@@ -42,6 +50,7 @@ $("#replyModal").on("show.bs.modal", (event )=>{
     // console.log("hi")
     var button = $(event.relatedTarget)
     var postId = getPostIdFromElement(button);
+    $("#submitReplyButton").data("id",postId);
 
     $.get("/api/posts/" + postId , results =>{
         outputPosts(results , $("#originalPostContainer"))
@@ -50,6 +59,9 @@ $("#replyModal").on("show.bs.modal", (event )=>{
     
 
 })
+
+
+$("#replyModal").on("hidden.bs.modal", ( )=> $("#originalPostContainer").html(""))
 
 $(document).on("click",".likeButton", (event)=>{    
     var button = $(event.target)

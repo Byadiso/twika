@@ -13,6 +13,7 @@ const postSchema = new mongoose.Schema({
     likes: [{ type: ObjectId, ref: "User" }],
     retweetUsers: [{ type: ObjectId, ref: "User" }],
     retweetData: { type: ObjectId, ref: "Post" },
+    replyTo: { type: ObjectId, ref: "Post" },
     pinned: Boolean
     
 
