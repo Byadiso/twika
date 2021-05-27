@@ -11,25 +11,17 @@ const router = express.Router();
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
-router.get('/',(req,res, next)=>{      
-   Post.find()
-   .populate("postedBy")
-   .populate("retweetData")
-   .sort({"createdAt": -1 })
-   .then( async results => {
-       results = await User.populate(results, {path : "retweetData.postedBy"})  
-       res.status(200).send(results)
-   })
-   .catch((error) => {
-       console.log(error)
-       res.sendStatus(400);
-   })
+router.get('/', async (req,res, next)=>{      
+  var results = await getPosts();
+  console.log(results)
+  res.status(200).send(results)
 });
 
 
 
 router.get('/:id',(req,res, next)=>{   
-    return res.status(200).send("this i nibyiza")   
+    return res.status(200).send("this i nibyiza")  
+
     Post.findBy({_id})
     .populate("postedBy")
     .populate("retweetData")
@@ -144,6 +136,16 @@ router.post('/:id/retweet', async(req,res, next)=>{
  });
 
 
+ async function getPosts(){
+
+     var results = await Post.find()
+     .populate("postedBy")
+     .populate("retweetData")
+     .sort({ "createdAt": -1})
+     .catch(error => console.log(error))
+
+     return await User.populate(results, {path : "retweetData.postedBy"});
+ }
 
 
     
