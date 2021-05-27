@@ -36,13 +36,17 @@ $("#submitPostButton , #submitReplyButton").click((event)=>{
     }
 
     $.post("/api/posts", data, (postData, status, xhr)=>{
-        console.log(postData)
-        var html = createPostHtml(postData);
-        $(".postsContainer").prepend(html);
-        textbox.val("");
-        button.prop("disabled", true)
-        
-    })
+
+        if(postData.replyTo){
+            location.reload()
+        } else {
+            console.log(postData)
+            var html = createPostHtml(postData);
+            $(".postsContainer").prepend(html);
+            textbox.val("");
+            button.prop("disabled", true)
+        }     
+     })
 
 });
 
@@ -140,13 +144,25 @@ function createPostHtml(postData) {
     var likeButtonActiveClass = postData.likes.includes(userLoggedIn._id) ? "active" : "";
     var retweeetButtonActiveClass = postData.retweetUsers.includes(userLoggedIn._id) ? "active" : ""
 
+    //for retweet 
     var retweetText = "";
+
     if(isRetweet){
         retweetText = `<span>
                               <i class="fas fa-retweet"></i>
                               Retweeted by <a href="/profile/${retweetedBy}">@${retweetedBy}</a>
                       </span>`
     }
+ //for reply
+    var replyFlag = "";
+    if(postData.replyTo){
+        if(!postData.replyTo._id){
+            return alert("reply  to is not populated")
+        }
+    }
+
+
+
 
     return `<div class="post" data-id='${postData._id}'>
               <div class="postActionContainer">
