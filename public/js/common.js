@@ -120,7 +120,7 @@ $(document).on("click",".post", (event)=>{
     var postId = getPostIdFromElement(element);
   
     if(postId !== undefined && !element.is("button")){
-        window.location.href='/post/' + postId
+        window.location.href='/posts/' + postId
     }
     // if(postId === undefined )return ;
     // $.ajax({
