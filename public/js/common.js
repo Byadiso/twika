@@ -1,10 +1,12 @@
 
 
-$("#postTextarea").keyup((event)=>{
+$("#postTextarea, #replyTextarea").keyup((event)=>{
     var textbox =$(event.target);
     var value = textbox.val().trim();
     // console.log(value);
-    var submitButton = $("#submitPostButton");
+
+    var isModal = textbox.parents(".modal").length == 1 ; 
+    var submitButton = isModal ? $("#submitReplyButton") : $("#submitPostButton");
 
     if(submitButton.lenght == 0) return alert("No submmit button found");
 
@@ -142,7 +144,7 @@ function createPostHtml(postData) {
                         
                         <div class="postFooter">
                             <div class="postButtonContainer">
-                                <button>
+                                <button data-toggle="modal" data-target="#replyModal">
                                     <i class="fas fa-comment"></i>
                                 </button>
                             </div>
