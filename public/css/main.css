@@ -275,10 +275,10 @@ button i, button span {
     width: 132px;
     margin-left: var(--spacing);
     position: absolute;
-    bottom: -66px;
+    bottom: -96px;
 }
-
 
 .profileHeaderContainer .userImageContainer img{
    border:  4px solid #fff;
 }
+
