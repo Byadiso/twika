@@ -150,7 +150,7 @@ function getPostIdFromElement(element){
           return postId
 }
 
-function createPostHtml(postData) {  
+function createPostHtml(postData, largeFont = false) {  
      
     if(postData == null ) return alert('post object is null');   
    
@@ -171,7 +171,12 @@ function createPostHtml(postData) {
     var timestamp= timeDifference(new Date(), new Date(postData.createdAt));
 
     var likeButtonActiveClass = postData.likes.includes(userLoggedIn._id) ? "active" : "";
-    var retweeetButtonActiveClass = postData.retweetUsers.includes(userLoggedIn._id) ? "active" : ""
+    var retweeetButtonActiveClass = postData.retweetUsers.includes(userLoggedIn._id) ? "active" : "";
+
+
+    var largeFontClass = largeFont ? "largeFont" : ""
+
+
 
     //for retweet 
     var retweetText = "";
@@ -201,7 +206,7 @@ function createPostHtml(postData) {
 
 
 
-    return `<div class="post" data-id='${postData._id}'>
+    return `<div class="post ${ largeFontClass }" data-id='${postData._id}'>
               <div class="postActionContainer">
                 ${retweetText}
                 
@@ -319,7 +324,7 @@ function outputPostsWithReplies(){
         container.append(html);
     }
 
-    var mainPostHtml = createPostHtml(results.postData)
+    var mainPostHtml = createPostHtml(results.postData, true)
     container.append(mainPostHtml);
 
     results.replies.forEach(result =>{    
