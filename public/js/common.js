@@ -57,7 +57,7 @@ $("#replyModal").on("show.bs.modal", (event )=>{
     $("#submitReplyButton").data("id",postId);
 
     $.get("/api/posts/" + postId , results =>{
-        outputPosts(results , $("#originalPostContainer"))
+        outputPosts(results.postData , $("#originalPostContainer"))
         // outputPosts(results, $(".postsContainer"))
     })
     
@@ -184,7 +184,7 @@ function createPostHtml(postData) {
     }
  //for reply
     var replyFlag = "";
-    if(postData.replyTo){
+    if(postData.replyTo && postData.replyTo._id){
         if(!postData.replyTo._id){
             return alert("reply  to is not populated")
         } else  if(!postData.replyTo.postedBy._id){
@@ -249,29 +249,6 @@ function createPostHtml(postData) {
     
 }
 
-
-
-function outputPosts(results, container){
-    container.html("");
-
-    if(!Array.isArray(results)) {
-        results = [results];
-    }
-
-    results.forEach(result =>{    
-           
-        var html = createPostHtml(result);
-        // console.log(html)
-        container.append(html);        
-    })
-
-    if(results.length === 0 ){
-        container.append("<span class='noResults'> Nothing to show.</span>")
-    }
-
-}
-
-
 function timeDifference(current, previous) {
 
     var msPerMinute = 60 * 1000;
@@ -307,4 +284,46 @@ function timeDifference(current, previous) {
     else {
         return Math.round(elapsed/msPerYear ) + ' years ago';   
     }
+}
+
+
+
+
+
+function outputPosts(results, container){
+    container.html("");
+
+    if(!Array.isArray(results)) {
+        results = [results];
+    }
+
+    results.forEach(result =>{    
+           
+        var html = createPostHtml(result);
+        // console.log(html)
+        container.append(html);        
+    })
+
+    if(results.length === 0 ){
+        container.append("<span class='noResults'> Nothing to show.</span>")
+    }
+
+}
+
+
+function outputPostsWithReplies(){
+    container.html("");
+
+    if(results.replyTo !== undefined && results.replyTo._id !== undefined) {
+        var html = createPostHtml(results.replyTo)
+        container.append(html);
+    }
+
+    var mainPostHtml = createPostHtml(results.postData)
+    container.append(mainPostHtml);
+
+    results.replies.forEach(result =>{    
+        var html = createPostHtml(result);
+        container.append(html);        
+    })
 }
