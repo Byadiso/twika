@@ -68,6 +68,20 @@ router.post('/', async(req,res, next)=>{
 });
 
 
+router.delete('/:id', async(req,res, next)=>{ 
+    
+    var postId = req.params.id;  
+
+    // delete post
+    var post = await Post.findByIdAndDelete(postId)
+    .catch((error)=>{
+        console.log(error);
+        res.sendStatus(400);
+    })
+
+    res.status(202).send(post)
+ });
+
 
 router.put('/:id/like', async(req,res, next)=>{ 
     
