@@ -27,17 +27,21 @@ async function getPayLoad(username, userLoggedIn){
     var user = await User.findOne({ username: username });
 
     if(user == null){
-       return  {
-            pageTitle:"user not found",
-            userLoggedIn: userLoggedIn ,
-            userLoggedInJs: JSON.stringify(userLoggedIn),
-            
-        }
+
+         user = await User.findById(username);
+
+         if(user == null ){
+            return  {
+                pageTitle:"user not found",
+                userLoggedIn: userLoggedIn ,
+                userLoggedInJs: JSON.stringify(userLoggedIn)            
+            }
+         }
     }
 
     return  {
         pageTitle:user.username,
-        userLoggedIn: userLoggedIn ,
+        userLoggedIn: userLoggedIn,
         userLoggedInJs: JSON.stringify(userLoggedIn),
         profileUser:user     
     }

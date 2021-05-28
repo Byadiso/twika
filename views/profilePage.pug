@@ -4,10 +4,14 @@ block content
     if !profileUser
         span.errorMessage Check the url you are trying to access 
     else         
-        span #{profileUser.firstName}
+        .profileHeaderContainer 
+            .coverPhotoContainer 
+
+                .userImageContainer 
+                    img(src=profileUser.profilePic, alt="User profile Image")
         .postsContainer
 
-    +createPostModals(userLoggedIn)
+        +createPostModals(userLoggedIn)
    
 
 block scripts 
