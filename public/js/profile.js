@@ -4,9 +4,8 @@ $(document).ready(()=>{
 
 
 
-
 function loadPosts(){
-    $.get("/api/posts",{postedBy : profileUserId},  results =>{
+    $.get("/api/posts",{postedBy : profileUserId, isReply: false},  results =>{
         console.log(results);
         outputPosts(results, $(".postsContainer"))
     })
