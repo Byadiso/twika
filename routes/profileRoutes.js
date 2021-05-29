@@ -23,6 +23,15 @@ router.get('/:username',async (req,res, next)=>{
 });
 
 
+
+router.get('/:username/replies',async (req,res, next)=>{     
+    var payload = await getPayLoad(req.params.username, req.session.user);
+    payload.selected = "replies";
+    
+    res.status(200).render("profilePage", payload);
+});
+
+
 async function getPayLoad(username, userLoggedIn){
     var user = await User.findOne({ username: username });
 
