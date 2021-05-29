@@ -184,8 +184,11 @@ function createPostHtml(postData, largeFont = false) {
  
 
     var postedBy = postData.postedBy;
-   
-    if(postedBy._id === undefined){
+    if(!postedBy) {
+        alert("PostedBy is null. Check the browser console to see the postData object.")
+        return console.log(postData);
+    }
+    else if(postedBy._id === undefined){
         return console.log("User Object not populated")
     }
     var displayName = postedBy.firstName + " " + postedBy.lastName;

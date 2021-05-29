@@ -32,8 +32,6 @@ router.get('/:id', async (req,res, next)=>{
     }
 
     results.replies = await getPosts({ replyTo : postId});
-
-
     
     res.status(200).send(results)
 
@@ -68,8 +66,7 @@ router.post('/', async(req,res, next)=>{
 });
 
 
-router.delete('/:id', async(req,res, next)=>{ 
-    
+router.delete('/:id', async(req,res, next)=>{     
     var postId = req.params.id;  
 
     // delete post
