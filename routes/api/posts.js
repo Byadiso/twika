@@ -13,17 +13,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 router.get('/', async (req,res, next)=>{   
     
-    var searchObj = req.query;
+    var searchObject = req.query;
 
 
-    if(searchObj.isReply !== undefined){
-        var isReply = searchObj.isReply =="true";
-        searchObj.replyTo = { $exists: isReply };
-        delete searchObject.isReply;
+    if(searchObject.isReply !== undefined){
+        var isReply = searchObject.isReply == "true";
+        searchObject.replyTo = { $exists: isReply };
+        delete searchObject.replyTo;
+        
 
     } 
 
-  var results = await getPosts(searchObj);
+  var results = await getPosts(searchObject);
   res.status(200).send(results)
 });
 

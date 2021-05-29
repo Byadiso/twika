@@ -8,15 +8,14 @@ block content
             var profileUserId = "!{profileUser._id}"; 
               var selectedTab = "!{selectedTab}";            
         .profileHeaderContainer 
-            .coverPhotoContainer 
-
+            .coverPhotoContainer
                 .userImageContainer 
-                     img(src=profileUser.profilePic, alt="User profile Image")
-            .profileBUttonsContainer 
+                    img(src=profileUser.profilePic, alt="User profile Image")
+            .profileButtonsContainer 
                 if profileUser._id != userLoggedIn._id
                     a.profileButton(href=`/messages/${profileUser._id}`)
                         i.fas.fa-envelope
-                    +createFollowButton(profileUser, false)
+                    +createFollowButton(profileUser, )
             .userDetailsContainer
                 span.displayName #{profileUser.firstName}  #{profileUser.lastName} 
                 span.username @#{profileUser.username}  
