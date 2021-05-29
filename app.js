@@ -36,6 +36,7 @@ const profileRoutes = require('./routes/profileRoutes');
 
 //api Routes
 const postsApiRoutes = require('./routes/api/posts');
+const usersApiRoutes = require('./routes/api/users');
 
 
 app.use('/login', loginRoutes);
@@ -46,6 +47,7 @@ app.use('/posts', middleware.requireLogin, postRoutes);
 app.use('/profile',  middleware.requireLogin, profileRoutes);
 
 app.use('/api/posts', postsApiRoutes);
+app.use('/api/users', usersApiRoutes);
 
 
 app.get("/", middleware.requireLogin, (req,res, next)=>{

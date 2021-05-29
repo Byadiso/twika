@@ -162,6 +162,28 @@ $(document).on("click",".post", (event)=>{
 });
 
 
+$(document).on("click",".followButton", (event)=>{    
+    var button = $(event.target)
+    var userId = button.data().user;
+  
+    if(userId === undefined )return ;
+    $.ajax({
+        url:`api/users/${userId}/follow`,
+        type: "PUT",
+        success: (userData)=>{          
+            button.find("span").text(userData.following.length || "" );
+            
+            if(postData.retweetUsers.includes(userLoggedIn._id)){
+                button.addClass("active");
+            } else {
+                button.removeClass("active");
+            }
+        }
+    })
+
+});
+
+
 function getPostIdFromElement(element){
     var isRoot = element.hasClass("post");
     var rootElement = isRoot ? element: element.closest(".post");
