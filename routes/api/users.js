@@ -39,15 +39,13 @@ router.put('/:userId/follow', async(req,res, next)=>{
 
     res.status(200).send(req.session.user);
 
-
-
  });
 
 
  
-router.put('/:userId/following', async(req,res, next)=>{ 
+router.get('/:userId/following', async(req,res, next)=>{ 
     User.findById(req.params.userId)
-    .populate()
+    .populate("following")
     .then(results =>{
         res.status(200).send(results);  
     })
@@ -57,6 +55,19 @@ router.put('/:userId/following', async(req,res, next)=>{
     })
  });
 
+ 
+ 
+router.get('/:userId/followers', async(req,res, next)=>{ 
+    User.findById(req.params.userId)
+    .populate("followers")
+    .then(results =>{
+        res.status(200).send(results);  
+    })
+    .catch((error)=>{
+        console.log(error);
+        res.status(400);
+    })
+ });
  
 
 router.post('/:id/retweet', async(req,res, next)=>{ 
