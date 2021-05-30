@@ -10,87 +10,6 @@ const router = express.Router();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-
-// router.get('/', async (req,res, next)=>{   
-    
-//     var searchObj = req.query;
-
-
-//     if(searchObj.isReply !== undefined){
-//         var isReply = searchObj.isReply =="true";
-//         searchObj.replyTo = { $exists: isReply };
-//         delete searchObject.isReply;
-
-//     } 
-
-//   var results = await getPosts(searchObj);
-//   res.status(200).send(results)
-// });
-
-
-
-// router.get('/:id', async (req,res, next)=>{   
-//     var postId = req.params.id;
-//     var postData = await getPosts({_id: postId});
-//     postData = postData[0];
-
-//     var results = {
-//         postData : postData
-//     }
-
-//     if(postData.replyTo !==undefined){
-//         results.replyTo = postData.replyTo;
-//     }
-
-//     results.replies = await getPosts({ replyTo : postId});
-    
-//     res.status(200).send(results)
-
-//  });
-
-// router.post('/', async(req,res, next)=>{  
-//     if(!req.body.content){
-//         console.log("content param not sent with request ")
-//         return res.sendStatus(400);
-//     }      
-
-
-
-//     var postData = {
-//         content: req.body.content,
-//         postedBy: req.session.user
-//     }
-    
-//     if(req.body.replyTo) {
-//         postData.replyTo = req.body.replyTo
-//     }
-//     Post.create(postData)
-//     .then( async newPost =>{
-//         newPost = await User.populate(newPost, { path: "postedBy" })
-//         res.status(201).send(newPost);
-//     })
-//     .catch(error =>{
-//         console.log(error);
-//         res.sendStatus(400);
-//     });
-  
-// });
-
-
-// router.delete('/:id', async(req,res, next)=>{     
-//     var postId = req.params.id;  
-
-//     // delete post
-//     var post = await Post.findByIdAndDelete(postId)
-//     .catch((error)=>{
-//         console.log(error);
-//         res.sendStatus(400);
-//     })
-
-//     res.status(202).send(post)
-//  });
-
-
 router.put('/:userId/follow', async(req,res, next)=>{ 
     
     //    var userId = req.session.user._id;
@@ -122,6 +41,20 @@ router.put('/:userId/follow', async(req,res, next)=>{
 
 
 
+ });
+
+
+ 
+router.put('/:userId/following', async(req,res, next)=>{ 
+    User.findById(req.params.userId)
+    .populate()
+    .then(results =>{
+        res.status(200).send(results);  
+    })
+    .catch((error)=>{
+        console.log(error);
+        res.status(400);
+    })
  });
 
  
