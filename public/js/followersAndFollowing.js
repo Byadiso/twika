@@ -1,4 +1,4 @@
-const User = require("../../schemas/UserSchema");
+
 
 $(document).ready(()=>{
 
@@ -29,7 +29,7 @@ $(document).ready(()=>{
     }
 
 
-    function outputUsers(data, container){
+    function outputUsers(results, container){
        container.html("");
 
        results.forEach(result =>{
@@ -46,6 +46,18 @@ $(document).ready(()=>{
     function createUserHtml(userData, showFollowButton){
 
         var name = userData.firstName + " " + userData.lastName;
+        var isFollowing = userLoggedIn.following && userLoggedIn.following.includes(userData._id);
+
+        var text = isFollowing ? "Following" : "Follow"
+        var buttonClass = isFollowing ? "followButton following" : "followButton"
+
+        var followButton = "";
+        if(showFollowButton && userLoggedIn._id !=userData._id){
+            followButton=`<div class="followButtonContainer">
+                                <button class="${buttonClass}" data-user="${userData._id}">${text}</button>
+                          </div>`
+        }
+
         return `<div class="user">
                     <div class="userImageContainer">
                         <img src="${userData.profilePic}">
@@ -55,7 +67,8 @@ $(document).ready(()=>{
                             <a href="/profile/${userData.username}">${name}</a>
                             <span class="username">@${userData.username}</span>
                         </div>                        
-                    </div>  
+                    </div>
+                    ${followButton}  
 
                 </div>`
     }
