@@ -31,7 +31,6 @@ $(document).ready(()=>{
 
     function outputUsers(results, container){
        container.html("");
-
        results.forEach(result =>{
            var html = createUserHtml(result, true);
            container.append(html);

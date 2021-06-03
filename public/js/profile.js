@@ -1,14 +1,10 @@
 $(document).ready(()=>{
-
 if(selectedTab == "replies"){
-    loadReplies()
+    loadReplies();
 }
 else{
     loadPosts();
-}
-
-
-    
+    }   
 });
 
 
