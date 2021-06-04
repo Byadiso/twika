@@ -1,3 +1,7 @@
+//globals
+
+var cropper; 
+
 
 
 $("#postTextarea, #replyTextarea").keyup((event)=>{
@@ -94,13 +98,54 @@ $("#filePhoto").change(function(){
     if(this.files && this.files[0]){
         var reader = new FileReader();
         reader.onload = (e)=>{
-            $("#imagePreview").attr("src", e.target.result)
+
+            var image = document.getElementById("imagePreview");
+            image.src = e.target.result;
+
+            
+            if(cropper !== undefined){
+                cropper.destroy();
+            }
+
+            cropper = new Cropper(image, {
+                aspectRatio: 1/1,
+                background: false
+            })
+
+
+
         }
          reader.readAsDataURL(this.files[0]);
     } else {
         console.log("nope")
     }
 })
+
+$("#imageUploadButton").click(()=>{
+    var canvas = cropper.getCroppedCanvas();
+if(canvas ==null ){
+    alert("could not load image make it is an image file");
+    return;
+    }
+
+    canvas.toBlob((blob)=>{
+        var formData = new FormData();
+        formData.append("cropppedImage", blob);
+
+        $.ajax({
+            url:"/api/users/profilePicture",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: () => location.reload()            
+        })
+        
+    })
+
+})
+
+
 
 $(document).on("click",".likeButton", (event)=>{    
     var button = $(event.target)

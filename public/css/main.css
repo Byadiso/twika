@@ -402,3 +402,9 @@ button i, button span {
     display: block;
 
 }
+
+#imagePreview {
+    width: 100%;
+    display: block;
+    max-width: 100%;
+}

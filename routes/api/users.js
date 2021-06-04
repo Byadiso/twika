@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
+const multer = requrie("multer");
+const upload = multer({ dest:"uploads/" });
+const path = require("path");
+const fs = require("fs");
 
 const  User = require('../../schemas/UserSchema');
 const  Post = require('../../schemas/PostSchema');
@@ -115,6 +119,28 @@ router.post('/:id/retweet', async(req,res, next)=>{
 
     res.status(200).send(post)
  });
+
+ router.post('/profilePicture',upload.single("croppedImage"), async(req,res, next)=>{ 
+        if(!req.file){
+            console.log("no file uploaded with the ajax request");
+            return res.sendStatus(400);
+        }
+        var filePath = `/uploads/images/${req.file.filename}.png`;
+        var tempPath = req.file.path;
+        var targetPath = path.join(__dirname, `../../${filePath}`);
+
+        fs.rename(tempPath, targetPath, error =>{
+            if(error != null ){
+                console.log(error);
+                return res.sendStatus(400);
+            }
+
+        req.session.user = await User.findByIdAndUpdate(req.session.userId._id, {profilePic: filePath}, {new: true})
+        res.sendStatus(204);
+        })    
+
+     });
+
 
 
  async function getPosts(filter){
