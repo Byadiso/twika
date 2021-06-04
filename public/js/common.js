@@ -121,7 +121,34 @@ $("#filePhoto").change(function(){
     }
 })
 
-$("#imageUploadButton").click(()=>{
+
+$("#coverPhoto").change(function(){
+    if(this.files && this.files[0]){
+        var reader = new FileReader();
+        reader.onload = (e)=>{
+
+            var image = document.getElementById("coverPreview");
+            image.src = e.target.result;
+
+            
+            if(cropper !== undefined){
+                cropper.destroy();
+            }
+
+            cropper = new Cropper(image, {
+                aspectRatio: 16/9,
+                background: false
+            })
+
+
+
+        }
+         reader.readAsDataURL(this.files[0]);
+        } 
+});
+
+
+$("#coverPhotoUploadButton").click(()=>{
     var canvas = cropper.getCroppedCanvas();
 if(canvas ==null ){
     alert("could not load image make it is an image file");
@@ -143,8 +170,35 @@ if(canvas ==null ){
         
     })
 
-})
+});
 
+
+
+
+$("#coverPhotoUploadButton").click(()=>{
+    var canvas = cropper.getCroppedCanvas();
+
+    if(canvas == null ){
+        alert("could not load image cover make it is an image file");
+        return;
+        }
+
+    canvas.toBlob((blob)=>{
+        var formData = new FormData();
+        formData.append("cropppedImage", blob);
+
+        $.ajax({
+            url:"/api/users/profilePicture",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: () => location.reload()            
+        })
+        
+    })
+
+})
 
 
 $(document).on("click",".likeButton", (event)=>{    
@@ -202,21 +256,7 @@ $(document).on("click",".post", (event)=>{
     if(postId !== undefined && !element.is("button")){
         window.location.href='/posts/' + postId
     }
-    // if(postId === undefined )return ;
-    // $.ajax({
-    //     url:`api/posts/${postId}/retweet`,
-    //     type: "POST",
-    //     success: (postData)=>{
-          
-    //         button.find("span").text(postData.retweetUsers.length || "" );
-            
-    //         if(postData.retweetUsers.includes(userLoggedIn._id)){
-    //             button.addClass("active");
-    //         } else {
-    //             button.removeClass("active");
-    //         }
-    //     }
-    // })
+    
 
 });
 

@@ -12,7 +12,12 @@ block content
         - followingCount = profileUser.following.length
 
         .profileHeaderContainer 
-            .coverPhotoContainer
+            .coverPhotoSection
+
+                .coverPhotoContainer
+                    if profileUser._id == userLoggedIn._id
+                            button.coverPictureButton(data-toggle="modal", data-target="#coverPhotoUploadModal")
+                                i.fas.fa-camera
                 .userImageContainer 
                     img(src=profileUser.profilePic, alt="User profile Image")
 
@@ -48,8 +53,8 @@ block content
         .postsContainer
 
         +createPostModals(userLoggedIn)
-        +createImageUploadPostModal(userLoggedIn)
-   
+        +createImageUploadPostModal()
+        +createCoverPhotoUploadPostModal()
 
 block scripts 
     script(src="/js/profile.js") 

@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
-const multer = requrie("multer");
+const multer = require("multer");
 const upload = multer({ dest:"uploads/" });
 const path = require("path");
 const fs = require("fs");
@@ -129,7 +129,7 @@ router.post('/:id/retweet', async(req,res, next)=>{
         var tempPath = req.file.path;
         var targetPath = path.join(__dirname, `../../${filePath}`);
 
-        fs.rename(tempPath, targetPath, error =>{
+        fs.rename(tempPath, targetPath, async(error) =>{
             if(error != null ){
                 console.log(error);
                 return res.sendStatus(400);
