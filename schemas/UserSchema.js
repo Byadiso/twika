@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
     email:{type:String,trim:true,required:true, unique: true },
     password:{type:String,trim:true,required:true, unique: true },
     profilePic:{type:String, default: "/images/profilePic.png" },
+    coverPhoto:{ type:String },
     likes: [{ type: ObjectId, ref: "Post" }],
     retweets: [{ type: ObjectId, ref: "User" }],
     following: [{ type: ObjectId, ref: "User" }],

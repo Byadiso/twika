@@ -150,9 +150,10 @@ $("#coverPhoto").change(function(){
 
 $("#coverPhotoUploadButton").click(()=>{
     var canvas = cropper.getCroppedCanvas();
-if(canvas ==null ){
-    alert("could not load image make it is an image file");
-    return;
+
+    if(canvas == null ){
+        alert("could not load image make it is an image file");
+        return;
     }
 
     canvas.toBlob((blob)=>{
@@ -160,7 +161,7 @@ if(canvas ==null ){
         formData.append("cropppedImage", blob);
 
         $.ajax({
-            url:"/api/users/profilePicture",
+            url:"/api/users/coverPhoto",
             type: "POST",
             data: formData,
             processData: false,
