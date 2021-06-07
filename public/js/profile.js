@@ -40,6 +40,4 @@ function outputPinnedPosts(results, container){
         var html = createPostHtml(result);
         container.append(html);        
     })
-  
-
 }

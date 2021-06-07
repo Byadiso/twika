@@ -438,14 +438,11 @@ function createPostHtml(postData, largeFont = false) {
 
         buttons =`
         
-        <button class='pinButton ${pinnedClass}' data-id="${postData._id}" data-toggle="modal" data-target="#confirmPintModal"><i class="fas fa-thumbtack"></i></button> 
+        <button class='pinButton ${pinnedClass}' data-id="${postData._id}" data-toggle="modal" data-target="${dataTarget}"><i class="fas fa-thumbtack"></i></button> 
    
         
         <button data-id="${postData._id}" data-toggle="modal" data-target="#deletePostModal"><i class="fas fa-times"></i></button>` 
-   
-    }
-
-
+       }
 
 
     return `<div class="post ${ largeFontClass }" data-id='${postData._id}'>
@@ -494,8 +491,7 @@ function createPostHtml(postData, largeFont = false) {
                     </div>
                 </div>
             </div>
-    `
-    
+    `    
 }
 
 function timeDifference(current, previous) {
@@ -535,10 +531,6 @@ function timeDifference(current, previous) {
     }
 }
 
-
-
-
-
 function outputPosts(results, container){
     container.html("");
 
@@ -558,30 +550,6 @@ function outputPosts(results, container){
     }
 
 }
-
-
-
-
-function outputPinnedPosts(results, container){
-    container.html("");
-
-    if(!Array.isArray(results)) {
-        results = [results];
-    }
-
-    results.forEach(result =>{    
-           
-        var html = createPostHtml(result);
-        // console.log(html)
-        container.append(html);        
-    })
-
-    if(results.length === 0 ){
-        container.append("<span class='noResults'> Nothing to show.</span>")
-    }
-
-}
-
 
 function outputPostsWithReplies(){
     container.html("");
