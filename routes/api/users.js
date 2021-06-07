@@ -14,6 +14,33 @@ const router = express.Router();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
+
+
+router.get('/', async(req,res, next)=>{ 
+   
+    var searchObject = req.query;
+
+    if(searchObject.search !== undefined){
+        searchObject= {
+            $or:[
+                {firstName: {$regex: searchObject.search, $options: "i"}},
+                {lastName: {$regex: searchObject.search, $options: "i"}},
+                {username: {$regex: searchObject.search, $options: "i"}},
+
+            ]
+        }       
+     
+    }
+
+    User.find(searchObj)
+    .then(results => res.status(200).send(results))
+    .catch(error =>{
+        console.log(error);
+        res.sendStatus(400)
+    })
+s });
+
+
 router.put('/:userId/follow', async(req,res, next)=>{ 
     
     //    var userId = req.session.user._id;
@@ -166,17 +193,16 @@ router.post('/:id/retweet', async(req,res, next)=>{
 
 
 
- async function getPosts(filter){
-
-     var results = await Post.find(filter)
+ async function getUsers(filter){
+     var results = await User.find(filter)
      .populate("postedBy")
      .populate("retweetData")
      .populate("replyTo")
      .sort({ "createdAt": -1})
      .catch(error => console.log(error))
 
-     results = await User.populate(results, {path : "replyTo.postedBy"});
-     return await User.populate(results, {path : "retweetData.postedBy"});
+     results = await Post.populate(results, {path : "replyTo.postedBy"});
+     return await Post.populate(results, {path : "retweetData.postedBy"});
  }
 
 
