@@ -22,9 +22,9 @@ function  search(value, searchType){
 
         $.get(url, {search: searchTerm},  (results) =>{
             if (searchType == "users"){
-
+                outputUsers(results, $(".resultsContainer"));    
             }else {
-                outputPosts(results, $(".resultsContainer"))
+                outputPosts(results, $(".resultsContainer"));
             }
         })
 }
