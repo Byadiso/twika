@@ -14,35 +14,7 @@ const postSchema = new mongoose.Schema({
     retweetUsers: [{ type: ObjectId, ref: "User" }],
     retweetData: { type: ObjectId, ref: "Post" },
     replyTo: { type: ObjectId, ref: "Post" },
-    pinned: Boolean
-    
-
-    // hashed_password:{
-    //     type:String,
-    //     required:true,
-      
-    // },
-    // photo: {
-    //     data: Buffer,
-    //     contentType: String
-    // },
-    // about:{
-    //     type:String,
-    //     trim:true
-    //    },
-    
-    // following: [{ type: ObjectId, ref: "user" }],
-    // followers: [{ type: ObjectId, ref: "USer" }],
-    // salt: String,
-    // role:{
-    //        type: Number,
-    //        default: 0
-    //    },
-    // history:{
-    //        type:Array,
-    //        default: []
-    //    }
-    
+    pinned: Boolean   
     }, 
     { timestamps: true }
 );

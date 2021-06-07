@@ -106,6 +106,26 @@ router.delete('/:id', async(req,res, next)=>{
 
     res.status(202).send(post)
  });
+ 
+router.put('/:id', async(req,res, next)=>{  
+    
+    if(req.body.pinned !== undefined){
+        await Post.updateMany({ postedBy: req.session.user}, {pinned: true})
+        .catch((error)=>{
+            console.log(error);
+            res.sendStatus(400);
+        })
+    }
+  
+     Post.findByIdAndUpdate(req.params.id, req.body)
+     .then(()=>res.sendStatus(204))
+    .catch((error)=>{
+        console.log(error);
+        res.sendStatus(400);
+    })
+
+    
+ });
 
 
 router.put('/:id/like', async(req,res, next)=>{ 

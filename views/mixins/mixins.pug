@@ -47,6 +47,7 @@ mixin createDeletePostModal()
 mixin createPostModals(userLoggedIn)
     +createReplyModal(userLoggedIn)
     +createDeletePostModal()
+    +createPinnedPostModal()
 
 mixin createFollowButton(user, isFollowing)
     - text = isFollowing ? "Following" : "Follow"
@@ -100,3 +101,40 @@ mixin createCoverPhotoUploadPostModal()
                 .modal-footer
                     button.btn.btn-secondary(type='button', data-dismiss='modal') cancel
                     button#coverPhotoUploadButton.btn.btn-primary(type='button') save
+
+
+                    
+                 
+mixin createPinnedPostModal()
+    #confirmPinModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='confirmPinModalLabel', aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5#confirmPinModalLabel.modal-title Pin this post?
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+                .modal-body
+                   p This post will appear at the top of your profile. You can only pin on post
+
+                    
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') cancel
+                    button#pinPostButton.btn.btn-primary(type='button') Pin
+
+
+                                
+mixin createUnPinModal()
+    #unPinModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='unPinModalLabel', aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5#unPinModalLabel.modal-title unPin the post?
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+                .modal-body
+                   p This post will unpinned. You can only pin on post
+
+                    
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') cancel
+                    button#unPinPostButton.btn.btn-primary(type='button') Unpin
