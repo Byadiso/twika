@@ -12,7 +12,19 @@ $("#searchBox").keydown((event)=>{
             $(".resultsContainer").html("");
         }
         else{
-            console.log(value)
+            search(value, searchType)
         }
     }, 1000)
 })
+
+function  search(value, searchType){
+        var  url = searchType == "users" ? "/api/users" : "/api/posts"
+
+        $.get(url, {search: searchTerm},  (results) =>{
+            if (searchType == "users"){
+
+            }else {
+                outputPosts(results, $(".resultsContainer"))
+            }
+        })
+}

@@ -21,6 +21,11 @@ router.get('/', async (req,res, next)=>{
         delete searchObject.replyTo;      
     } 
 
+    if(searchObject.search !== undefined){
+        searchObject.content = {$regex: searchObject.search, $options: "i"};
+        delete searchObject.search;   
+    }
+
     if(searchObject.followingOnly !== undefined){
         var followingOnly = searchObject.followingOnly == "true";
 
