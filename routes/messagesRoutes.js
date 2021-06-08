@@ -7,26 +7,26 @@ const  User = require('../schemas/UserSchema');
 const router = express.Router();
 
 router.get('/',(req,res, next)=>{ 
-    var payload = createPayload(req.session.user);
-    res.status(200).render("searchPage", payload);
+    var payload =  {
+    pageTitle:"inbox ",
+    userLoggedIn: req.session.user,
+    userLoggedInJs: JSON.stringify(req.session.user),
+    
+};
+    res.status(200).render("inboxPage", payload);
 });
 
 
-router.get('/:selectedTab',(req,res, next)=>{ 
-    var payload = createPayload(req.session.user);
-    payload.selectedTab = req.params.selectedTab;
-    res.status(200).render("searchPage", payload);
+router.get('/',(req,res, next)=>{ 
+    var payload =  {
+    pageTitle:"new message ",
+    userLoggedIn: req.session.user,
+    userLoggedInJs: JSON.stringify(req.session.user),
+    
+};
+    res.status(200).render("newMessage", payload);
 });
 
-function createPayload(userLoggedIn){
-    return {
-        pageTitle:"Search",
-        userLoggedIn: userLoggedIn,
-        userLoggedInJs: JSON.stringify(userLoggedIn),
-        
-    }
-}
     
 module.exports = router;
 
-v
