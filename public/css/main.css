@@ -508,3 +508,43 @@ color: var(--blue);
     margin: 5px 5px 0 0;
     display: inline-block;
 }
+
+
+
+.resultListItem {
+      
+    padding: 7px;
+    align-items: center;
+    flex-shrink: 0;
+    display: flex;
+    border-bottom: 1px solid var(--lightGrey);
+}
+
+
+
+.resultListItem:hover {
+     background-color: #CBE5FE;  
+}
+
+.resultsDetailsContainer {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .resultsDetailsContainer .heading {
+       font-weight: 500;
+    }
+
+    
+    .resultsDetailsContainer .subText {
+        color: var(--greyText);
+        font-size: 14px;
+     }
+ 
+
+
+
+
+
+
