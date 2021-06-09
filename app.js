@@ -40,6 +40,7 @@ const messagesRoutes = require('./routes/messagesRoutes');
 //api Routes
 const postsApiRoutes = require('./routes/api/posts');
 const usersApiRoutes = require('./routes/api/users');
+const chatsApiRoutes = require('./routes/api/chats');
 
 
 
@@ -60,6 +61,8 @@ app.use('/profile',  middleware.requireLogin, profileRoutes);
 
 app.use('/api/posts', postsApiRoutes);
 app.use('/api/users', usersApiRoutes);
+app.use('/api/chats', chatsApiRoutes);
+
 
 
 

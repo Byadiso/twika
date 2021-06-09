@@ -3,7 +3,7 @@ $("#searchBox").keydown((event)=>{
     clearTimeout(timer);
     var textbox =  $(event.target);
     var value = textbox.val();
-    
+    var searchType = textbox.data().search;
 
     timer = setTimeout(()=>{
         value = textbox.val().trim();
