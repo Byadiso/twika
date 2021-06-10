@@ -30,10 +30,10 @@ function creteChatHtml (chatData){
  var latestMessage = ""
 
  return ` <a href='/messages/${chatData._id}' class= "resultsListItem">
-                &{image}
-                <div class='resultsDetailsContainer'>
-                    <span class='heading'>${chatName}</span>
-                    <span class='heading'>${latestMessage}</span>
+                ${image}
+                <div class='resultsDetailsContainer ellipsis'>
+                    <span class='heading ellipsis'>${chatName}</span>
+                    <span class='heading ellipsis'>${latestMessage}</span>
                 </div>
             </a>`;
 }
