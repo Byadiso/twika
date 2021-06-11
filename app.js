@@ -3,15 +3,29 @@ const app = express();
 const path = require('path');
 const bodyParser = require("body-parser");
 const mongoose = require('./database/db');
+const port = 3002;
+// const io = require('socket.io');
 
 const session = require('express-session');
+
+
+// run our server 
+
+const server = app.listen(port, ()=>{
+    message;
+});
+
+//runn socket.io
+const io = require('socket.io')(server, { pingTimeout: 60000 });
 
 
 
 
 const middleware = require('./middleware');
-const port = 3002;
+
 const message = console.log('server listening on port ' + port);
+
+
 
 
 app.set("view engine", "pug");
@@ -78,10 +92,6 @@ app.get("/", middleware.requireLogin, (req,res, next)=>{
     res.status(200).render("home", payload)
 });
 
-
-// run our server 
-
-const server = app.listen(port, ()=>{
-    message;
-});
-
+io.on("connection", ()=>{
+    console.log("connected to socket.io")
+})

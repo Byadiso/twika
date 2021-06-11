@@ -113,7 +113,9 @@ button i, button span {
 
 
 .mainContentContainer{
+    flex: 1;
     display: flex;
+    overflow-y: hidden;
     /* padding: var(--spacing); */
 }
 
@@ -479,7 +481,9 @@ color: var(--blue);
     display: flex;
     flex-direction: column;
     min-height: 0;
-    flex:1
+    flex:1;
+    flex-basis: 0;
+    
 }
 
 .chatTitleBar {
@@ -726,5 +730,76 @@ color: var(--blue);
      background-color: var(--blue);
      color: #fff;
  }
+ .chatMessages .message.mine .messageBody{
+    align-items: flex-end;
+ }
+
+ 
+ .chatMessages .message.mine .messageBody{
+     align-items: flex-start;
+}
+
+ .chatMessages .message.mine.first .messageBody {
+    border-bottom-right-radius: 2px;
+}
+.chatMessages .message.mine:not(.first):not(.last) .messageBody {
+    border-bottom-right-radius: 2px;
+    border-top-right-radius: 2px;
+}
+.chatMessages .message.mine.last .messageBody {
+    border-bottom-right-radius: 18px;
+}
+.chatMessages .message.mine.last:not(.first) .messageBody {
+    border-bottom-right-radius: 2px;
+    border-top-right-radius: 2px;
+}
 
 
+.chatMessages .message.theirs.first .messageBody {
+    border-bottom-left-radius: 2px;
+}
+.chatMessages .message.theirs:not(.first):not(.last) .messageBody {
+    border-bottom-left-radius: 2px;
+    border-top-left-radius: 2px;
+}
+.chatMessages .message.theirs.last .messageBody {
+    border-bottom-left-radius: 18px;
+}
+.chatMessages .message.theirs.last:not(.first) .messageBody {
+    border-bottom-left-radius: 2px;
+    border-top-left-radius: 2px;
+}
+
+.senderName{
+    color: rgba(0, 0, 0, 0.4) ;
+}
+
+.chatMessages .imageContainer{
+    height: 24px;
+    width: 24px;
+    margin-right: 7px;
+}
+
+.chatMessages img{
+    height: 100%;
+    border-radius: 50%;
+    vertical-align: bottom;
+}
+
+
+.chatMessages .message.last{
+   margin-bottom: 5px;
+}
+
+
+.loadingSpinnerContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.loadingSpinnerContainer img {
+    width: 50%;
+    max-width: 75px;
+}
