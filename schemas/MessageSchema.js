@@ -5,11 +5,11 @@ const crypto = require ('crypto');
 const {ObjectId } = mongoose.Schema;
 
 const messageSchema = new mongoose.Schema({
-    chatName:{ type:String, trim:true},
-    isGroupChat: { type:Boolean , default: false},
-    users: [{ type: ObjectId, ref: "User" }], 
-    latestMessage: { type: ObjectId, ref: "Message" }
-     
+
+        sender: { type: ObjectId, ref: "User" },
+        content : {type:String, trim:true},
+        chat: { type: ObjectId, ref: "chat" },
+        readBy: { type: ObjectId, ref: "User"}
     }, 
     { timestamps: true }
 );

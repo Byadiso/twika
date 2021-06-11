@@ -1,8 +1,14 @@
 $(document).ready(()=>{
-    $.get("/api/chats/${chatId}", (data) =>{
+    $.get(`/api/chats/${chatId}`, (data) =>{
         $('#chatName').text(getChatName(data))
         console.log(results);
         outputPosts(results, $(".postsContainer"))
+    })
+
+
+    $.get(`/api/chats/${chatId}/messages`, (data)=>{
+        console.log(data)
+        
     })
 })
 
@@ -43,5 +49,52 @@ $(".inputTextbox").keydown((event)=>{
 
 
 function messageSubmitted (){
-    console.log("yes subietted smS")
+    var content = $('.inputTextbox').val().trim();
+
+    if(content != ""){
+        sendMessage(content);
+        $('.inputTextbox').val("");
+    }
+  
+}
+
+
+function sendMessage(content){
+$.post("api/messages", { content: content , chatId: chatId }, (data, status, xhr)=>{
+  
+    if(xhr.status != 201){
+        alert("could not send message");
+        $('.inputTextbox').val(content);
+        return;
+    }
+  
+    addChatMessageHtml(data)
+})
+}
+
+
+
+function addChatMessageHtml(message){
+    if(!message|| !message._id){
+        alert("Message is not valid ")
+    }
+
+    var messageDiv = createMessageHtml(message);
+    $('.chatMessages').append(messageDiv)
+
+}
+
+function createMessageHtml(message){
+
+    var isMine = message.sender._id == userLoggedIn._id;
+    var liClassName = isMine ? "mine":"theirs"
+
+
+    return `<li class="message ${liClassName}">
+                <div class="messageContainer">
+                    <span class="messageBody">
+                        ${message.content}    
+                    </span>
+                </div>
+            </li>`
 }

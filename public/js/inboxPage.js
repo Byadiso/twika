@@ -26,8 +26,8 @@ function outputChatsList(chatList, container){
 
 function creteChatHtml (chatData){
  var chatName = getChatName(chatData);
- var image = getUserChatImageElement(), // to do 
- var latestMessage = ""
+ var image = getUserChatImageElement(); // to do 
+ var latestMessage = getLatestMessage(chatData.latestMessage)
 
  return ` <a href='/messages/${chatData._id}' class= "resultsListItem">
                 ${image}
@@ -36,6 +36,17 @@ function creteChatHtml (chatData){
                     <span class='heading ellipsis'>${latestMessage}</span>
                 </div>
             </a>`;
+}
+
+
+function getLatestMessage(latestMessage){
+    if(latestMessage != null ){
+        var sender = latestMessage.sender;
+        return `${sender.firstName } ${sender.lastName} : ${latestMessage.content}`;
+
+    }
+
+    return "New chat";
 }
 
 
