@@ -145,6 +145,40 @@ mixin createChatImage(chatData, userLoggedIn)
     if(!chatData)
         return 
 
+    - var i = 0 
+    - var maxImageToShow = 3 
+    - var remainingUsers = chatData.users.legnth - maxImageToShow
+    - remainingUsers-- //remove our own image
+
     .chatImagesContainer
+        if remainingUsers > 0 
+            .userCount 
+                span #{remainingUsers}
+
         each user in ChatData.users 
+            if chatData.users.length != 1 && user._id == userLoggedIn._id 
+                - continue 
+            else if i >= maxImageToShow
+                - break 
+
             img(src=user.profilePic, alt="user's profile picture", title=user.firstName)
+            - i++
+
+
+
+                                          
+mixin createChatNameModal(chat)
+    #chatNameModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='chatNameModal', aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5#chatNameModal.modal-title chage the chat name?
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+                .modal-body
+                   input#chatNameTextbox(type="text" , placeholder="Enter a name for this chat ", value = chat.chatName)
+
+                    
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') cancel
+                    button#chatNameButton.btn.btn-primary(type='button') save
