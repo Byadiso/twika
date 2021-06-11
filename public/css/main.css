@@ -25,6 +25,10 @@ html, body{
     outline: none !important;
 }
 
+ul{
+    margin: 0;
+}
+
 a{
     color: inherit;
 }

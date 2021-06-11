@@ -1,4 +1,10 @@
 $(document).ready(()=>{
+
+    socket.emit("join room". chatId);
+    socket.on("typing",()=> {console.log("user is typing")} );
+    
+
+
     $.get(`/api/chats/${chatId}`, (data) =>{
         $('#chatName').text(getChatName(data))
         console.log(results);
@@ -53,6 +59,9 @@ $(".sendMessageButton").click(()=>{
 
 
 $(".inputTextbox").keydown((event)=>{
+
+    updateTyping();
+
     if(event.which === 13){
         messageSubmitted();
         return false
@@ -60,6 +69,9 @@ $(".inputTextbox").keydown((event)=>{
     
  })
 
+ function updateTyping(){
+     socket.emit("typing", chatId);
+ }
 
  function addMessagesHmlToPage(html){
     $('.chatMessages').append(html)
