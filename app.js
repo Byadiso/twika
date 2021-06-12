@@ -50,6 +50,7 @@ const profileRoutes = require('./routes/profileRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const searchRoutes = require('./routes/searchRoutes');
 const messagesRoutes = require('./routes/messagesRoutes');
+const notificationsRoutes = require('./routes/notificationRoutes');
 
 //api Routes
 const postsApiRoutes = require('./routes/api/posts');
@@ -61,13 +62,15 @@ const messagesApiRoutes = require('./routes/api/messages');
 
 
 
+
 app.use('/login', loginRoutes);
 app.use('/register', registerRoutes);
 app.use('/logout', logoutRoutes);
 app.use('/uploads', uploadRoutes);
 
-app.use('/api/search',middleware.requireLogin, searchRoutes);
-app.use('/api/messages',middleware.requireLogin, messagesRoutes);
+app.use('/search',middleware.requireLogin, searchRoutes);
+app.use('/messages',middleware.requireLogin, messagesRoutes);
+app.use('/notifiactions',middleware.requireLogin, notificationsRoutes);
 
 
 app.use('/posts', middleware.requireLogin, postRoutes);
@@ -102,6 +105,17 @@ io.on("connection", (socket)=>{
     socket.on("join room", room => socket.join(room));
     socket.on("typing", room => socket.in(room).emit("typing"));
     socket.on("stop typing", room => socket.in(room).emit("stop typing"));
+
+
+    socket.on("new message", newMessage =>{
+        var chat = newMessage.chat;
+        if(!chat.users) return console.log("chat.users not defined");
+        chat.users.forEach(user =>{
+            if(user._id== newMessage.sender._Id) return;
+            socket.in(user._id).emit("message received", newMessage);
+        })
+        }
+    );
 
 
 

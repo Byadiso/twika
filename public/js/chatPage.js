@@ -124,7 +124,11 @@ $.post("api/messages", { content: content , chatId: chatId }, (data, status, xhr
         return;
     }
   
-    addChatMessageHtml(data)
+    addChatMessageHtml(data);
+
+    if(connected){
+        socket.emit("new message", data);
+    }
 })
 }
 
