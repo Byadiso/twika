@@ -4,7 +4,7 @@ const crypto = require ('crypto');
 
 const {ObjectId } = mongoose.Schema;
 
-const notificationSchema = new mongoose.Schema({
+const NotificationSchema = new mongoose.Schema({
 
         userTo: { type: ObjectId, ref: "User" },
         userFrom: { type: ObjectId, ref: "User" },
@@ -16,6 +16,17 @@ const notificationSchema = new mongoose.Schema({
 );
 
 
-var notification = mongoose.model("Notification", notificationSchema);
+NotificationSchema.statics.insertNotification = async (userTo, userFrom, notificationType, entityId)=>{
+    var dat = {
+        userTo: userTo,
+        userFrom: userFrom,
+        notificationType: notificationType,
+        entityId:entityId
+    };
+    await Notification.deleteOne(data).catch(error => console.log(error));
+    return Notification.create(data).catch(error => console.log(error));
+}
 
-module.exports = notification;
+var Notification = mongoose.model("Notification", NotificationSchema);
+
+module.exports = Notification;
