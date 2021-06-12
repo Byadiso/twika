@@ -57,6 +57,7 @@ const postsApiRoutes = require('./routes/api/posts');
 const usersApiRoutes = require('./routes/api/users');
 const chatsApiRoutes = require('./routes/api/chats');
 const messagesApiRoutes = require('./routes/api/messages');
+const notificationsApiRoutes = require('./routes/api/notifications');
 
 
 
@@ -80,6 +81,7 @@ app.use('/api/posts', postsApiRoutes);
 app.use('/api/users', usersApiRoutes);
 app.use('/api/chats', chatsApiRoutes);
 app.use('/api/messages', messagesApiRoutes);
+app.use('/api/notifications', notificationsApiRoutes);
 
 
 
@@ -102,6 +104,7 @@ io.on("connection", (socket)=>{
         socket.join(userData._id);
         socket.emit("connected");
     })
+
     socket.on("join room", room => socket.join(room));
     socket.on("typing", room => socket.in(room).emit("typing"));
     socket.on("stop typing", room => socket.in(room).emit("stop typing"));
