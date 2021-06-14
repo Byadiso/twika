@@ -17,7 +17,7 @@ const NotificationSchema = new mongoose.Schema({
 
 
 NotificationSchema.statics.insertNotification = async (userTo, userFrom, notificationType, entityId)=>{
-    var dat = {
+    var data = {
         userTo: userTo,
         userFrom: userFrom,
         notificationType: notificationType,
