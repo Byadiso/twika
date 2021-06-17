@@ -61,7 +61,7 @@ router.get('/', async(req,res, next)=>{
     .sort({ updatedAt: -1 })
     .then( async results => {
         if(req.query.unreadOnly != undefined && req.query.unreadOnly== "true"){
-            results = results.filter(r => !r.latestMessage.readyBy.includes(req.session._id))  
+            results = results.filter(r => r.latestMessage && !r.latestMessage.readyBy.includes(req.session._id))  
         }
         results = await User.populate( results, { path: "latestMessage.sender"})
         res.status(200).send(results)
@@ -109,8 +109,23 @@ router.get('/:chatId', async(req,res, next)=>{
     var chatId = req.params.chatId;
 
     Message.find({Chat: chatId })
-k8    .populate("sender")
+    .populate("sender")
     .then(results => res.status(200).send(results))
+    .catch(error =>{
+        console.log(error);
+        res.sendStatus(400)
+    })    
+ });
+
+
+
+ 
+ router.get('/:chatId/messages/marksAsRead', async(req,res, next)=>{ 
+
+    var chatId = req.params.chatId;
+
+    Message.find({Chat: chatId }, { $addToSet: { readyBy: req.session.user._id}})
+    .then(results => res.sendStatus(204))
     .catch(error =>{
         console.log(error);
         res.sendStatus(400)
