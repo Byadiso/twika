@@ -61,6 +61,7 @@ nav a{
     align-items: center;
     justify-content: center;
     color: #212529;
+    position: relative;
 }
 
 nav a.blue{
@@ -823,4 +824,28 @@ color: var(--blue);
 
 .resultListItem.notification * {
     pointer-events: none;
+}
+
+#notificationsBadge,
+#messagesBadge {
+background-color: var(--red);
+position: absolute;
+height: 25px;
+border-radius: 50%;
+top: 0;
+right: 0;
+color: white;
+font-size: 18px;
+display: flex;
+justify-content: center;
+align-items: center;
+visibility: hidden;
+}
+
+
+
+
+#notificationsBadge.active,
+#messagesBadge.active {
+visibility: visible;
 }

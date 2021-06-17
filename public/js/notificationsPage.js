@@ -4,6 +4,7 @@ $(document).ready(()=>{
     })
 })
 
+$("#markNotificationAsRead").click(()=> markNotificationsAsOpened());
 
 function outputNotificationList(notifications, container){
     notifications.forEach(notification => {

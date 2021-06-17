@@ -4,7 +4,10 @@ var cropper;
 var timer;  
 var selectedUsers = [];
 
-
+$(document).ready(()=>{
+    refreshMessagesBadge();
+    refreshNotificationsBadge();
+})
 
 $("#postTextarea, #replyTextarea").keyup((event)=>{
     var textbox =$(event.target);
@@ -41,9 +44,10 @@ $("#submitPostButton , #submitReplyButton").click((event)=>{
         data.replyTo = id ;
     }
 
-    $.post("/api/posts", data, (postData, status, xhr)=>{
+    $.post("/api/posts", data, (postData)=>{
 
         if(postData.replyTo){
+            emitNotification(postData.replyTo.postedBy);
             location.reload()
         } else {
             console.log(postData)
@@ -312,6 +316,8 @@ $(document).on("click",".likeButton", (event)=>{
             
             if(postData.likes.includes(userLoggedIn._id)){
                 button.addClass("active");
+                emitNotification(postData.postedBy);
+                
             } else {
                 button.removeClass("active");
             }
@@ -336,6 +342,7 @@ $(document).on("click",".retweetButton", (event)=>{
             
             if(postData.retweetUsers.includes(userLoggedIn._id)){
                 button.addClass("active");
+                emitNotification(postData.postedBy._id);
             } else {
                 button.removeClass("active");
             }
@@ -377,6 +384,7 @@ $(document).on("click",".followButton", (event)=>{
             if(data.following && data.following.includes(userId)){
                 button.addClass("following");
                 button.text("Following");
+                emitNotification(userId);
             } else {
                 button.removeClass("following");
                 button.text("Follow");
@@ -748,6 +756,8 @@ function messageReceived(newMessage){
     else {
         addChatMessageHtml(newMessage);
     }
+
+    refreshMessagesBadge();
 }
 
 
@@ -761,5 +771,33 @@ function markNotificationsAsOpened ( notificationId=null, callback=null ){
         success:()=> { 
             callback();
         }
+    })
+}
+
+function refreshMessagesBadge(){
+    $.get("/api/chats", {unreadOnly: true}, (data)=>{
+var results = data.length;
+
+            if (numResults>o ){
+                $('$messagesbadge').text(numResults).addClass("active");
+                    }else {
+                        $('$messagesbadge').text(numResults).removeaddClass("active")
+                    }
+    })
+}
+
+
+
+
+
+function refreshNotificationsBadge(){
+    $.get("/api/notifications", {unreadOnly: true}, (data)=>{
+var results = data.length;
+
+            if (numResults>o ){
+                $('$notificationsBadge').text(numResults).addClass("active");
+                    }else {
+                        $('$notificationsBadge').text(numResults).removeaddClass("active")
+                    }
     })
 }
